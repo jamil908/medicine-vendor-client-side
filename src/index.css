@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Carousel-root {
+    height: 500px !important;
+
+}
+.slide img{
+    height: 300px !important;
+    object-fit: cover;
+}
+.thumbs-wrapper {
+    display: none !important;
+}
