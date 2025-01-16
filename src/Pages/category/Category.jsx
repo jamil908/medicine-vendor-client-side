@@ -1,5 +1,6 @@
 import React from 'react';
 import useCategory from '../../Hooks/useCategory/useCategory';
+import { Link } from 'react-router-dom';
 
 const Category = () => {
     const { data: categories = [], isLoading, error } = useCategory();
@@ -12,6 +13,7 @@ const Category = () => {
             <h2 className="text-3xl font-bold text-center mb-8">Medicine Categories</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {categories.map((category) => (
+                    <Link to={`/category/${category.categoryName}`}>
                     <div
                         key={category._id}
                         className="p-4 border rounded-lg shadow hover:shadow-lg transition duration-200 bg-white"
@@ -24,6 +26,7 @@ const Category = () => {
                         <h3 className="text-xl font-semibold text-gray-800">{category.categoryName}</h3>
                         <p className="text-gray-600 mt-2">Number of Medicines: {category.numberOfMedicines}</p>
                     </div>
+                    </Link>
                 ))}
             </div>
         </div>
