@@ -27,7 +27,7 @@ const Navber = () => {
         
     </>
     return (
-        <div className="navbar bg-transparent  backdrop-blur-md items-center container text-center fixed z-50 top-0 ">
+        <div className="navbar bg-transparent  backdrop-blur-md items-center container text-center sticky z-50 top-0 ">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
