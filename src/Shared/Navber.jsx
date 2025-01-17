@@ -5,7 +5,9 @@ import './Navber.css'
 const Navber = () => {
     const navOption = <>
         <NavLink to='/' className=' text-center items-center flex justify-center md:mr-2'><button>Home</button></NavLink>
-        <NavLink to='/shop'  className=' text-center items-center flex justify-center'><button>Shop</button></NavLink>
+        <NavLink to='/shop'  className=' text-center items-center flex justify-center '><button>Shop</button></NavLink>
+        <NavLink to='/login'  className=' text-center items-center flex justify-center md:hidden'><button>login</button></NavLink>
+        <NavLink to='/signup'  className=' text-center items-center flex justify-center  md:hidden'><button>sign up</button></NavLink>
         <Link to='/cart'  className=' text-center items-center'> <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
         <div className="indicator">
           <svg
@@ -58,8 +60,12 @@ const Navber = () => {
 {navOption}
     </ul>
   </div>
-  <div className="navbar-end">
-  <div className="dropdown dropdown-end">
+  <div className="navbar-end flex gap-3">
+  <NavLink to='/login'  className=' text-center items-center    hidden md:block   justify-center'><button>login</button></NavLink>
+        <NavLink to='/signup'  className=' text-center items-center  hidden md:block  justify-center'><button>sign up</button></NavLink>
+       
+  <div className="dropdown dropdown-end f">
+
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img

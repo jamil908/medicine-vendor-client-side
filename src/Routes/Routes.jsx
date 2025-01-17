@@ -4,6 +4,8 @@ import {
 import Main from "../Layouts/Main";
 import Home from "../Pages/Home";
 import CategoryDetails from "../Pages/category/CategoryDetails";
+import Login from "../Pages/login/Login";
+import Register from "../Pages/login/Register";
   
   export const router = createBrowserRouter([
     {
@@ -17,6 +19,14 @@ import CategoryDetails from "../Pages/category/CategoryDetails";
         {
             path:'/category/:categoryName',
             element:<CategoryDetails></CategoryDetails>
+        },
+        {
+            path:'/login',
+            element:<Login></Login>
+        },
+        {
+            path:'/signup',
+            element:<Register></Register>
         },
       ]
     },
