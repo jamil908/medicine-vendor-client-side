@@ -7,6 +7,8 @@ import CategoryDetails from "../Pages/category/CategoryDetails";
 import Login from "../Pages/login/Login";
 import Register from "../Pages/login/Register";
 import PrivateRoute from "../Pages/Private/PrivateRoute";
+import Shop from "../Pages/shop/Shop";
+// import Shop from "../Pages/shop/Shop";
   
   export const router = createBrowserRouter([
     {
@@ -28,6 +30,10 @@ import PrivateRoute from "../Pages/Private/PrivateRoute";
         {
             path:'/signup',
             element:<Register></Register>
+        },
+        {
+            path:'/shop',
+            element:<Shop></Shop>
         },
       ]
     },

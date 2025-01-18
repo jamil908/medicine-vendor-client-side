@@ -2,12 +2,33 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { FaGoogle } from 'react-icons/fa';
 
 const Login = () => {
-    const {signIn}=useContext(AuthContext)
+    const {signIn,googleSignIn}=useContext(AuthContext)
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
+  
+    const handleGoogleLogin = () => {
+      googleSignIn()
+          .then((result) => {
+              const user = result.user;
+              Swal.fire({
+                  title: 'Google Login Successful!',
+                  icon: 'success',
+              });
+              navigate(from, { replace: true });
+          })
+          .catch((error) => {
+              console.error(error.message);
+              Swal.fire({
+                  title: 'Error!',
+                  text: error.message,
+                  icon: 'error',
+              });
+          });
+  };
     const handleLogin = e =>{
         e.preventDefault();
         const form = e.target;
@@ -64,6 +85,8 @@ const Login = () => {
           <button className="btn btn-primary">Login</button>
         </div>
       </form>
+      <div><button onClick={handleGoogleLogin} className='flex btn '><FaGoogle></FaGoogle>login with google</button></div>
+
       <p className=' mb-3 ml-5'><small>New Here?<Link to='/signup'>Create an account</Link></small></p>
     </div>
   </div>
