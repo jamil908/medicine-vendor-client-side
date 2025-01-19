@@ -7,14 +7,16 @@ import Modal from "../../Shared/Modal";
 import Swal from "sweetalert2";
 import UseAuth from "../../Hooks/useAuth/UseAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import useCart from "../../Hooks/useCart/useCart";
 
 const Shop = () => {
   const { user } = UseAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [ ,refetch]=useCart();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [cart, setCart] = useState([]);
-
+ console.log(cart)
   const axiosSecure = useAxiosSecure();
 
   // Fetch medicines data
@@ -65,6 +67,7 @@ const Shop = () => {
                   no-repeat
                 `,
               });
+              refetch();
             }
           })
           .catch((error) => {
