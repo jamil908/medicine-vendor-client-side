@@ -1,6 +1,4 @@
 
-
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
@@ -12,6 +10,7 @@ import useCart from '../../Hooks/useCart/useCart';
 
 const CategoryDetails = () => {
   const { categoryName } = useParams();
+  console.log(categoryName)
   const { user } = UseAuth();
   const axiosSecure = useAxiosSecure();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
@@ -49,6 +48,7 @@ const CategoryDetails = () => {
         const cartItem = {
           ...medicine,
           userEmail: user.email,
+          quantity:1
         };
 
         axiosSecure
@@ -128,37 +128,44 @@ const CategoryDetails = () => {
               <th className="border border-gray-300 p-2">Actions</th>
             </tr>
           </thead>
+
+
+        
+
           <tbody>
-            {medicines[0]?.medicines?.map((medicine, index) => (
-              <tr key={index}>
-                <td className="border border-gray-300 p-2">
-                  <img
-                    src={medicine.image}
-                    alt={medicine.name}
-                    className="w-16 h-16 object-cover"
-                  />
-                </td>
-                <td className="border border-gray-300 p-2">{medicine.name}</td>
-                <td className="border border-gray-300 p-2">{medicine.genericName}</td>
-                <td className="border border-gray-300 p-2">{medicine.company}</td>
-                <td className="border border-gray-300 p-2">${medicine.price}</td>
-                <td className="border border-gray-300 p-2 space-x-2">
-                  <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => handleViewDetails(medicine)}
-                  >
-                    Eye
-                  </button>
-                  <button
-                    className="btn btn-sm btn-secondary"
-                    onClick={() => handleSelectMedicine(medicine)}
-                  >
-                    Select
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+  {medicines.map((medicine, index) => (
+    <tr key={index}>
+      <td className="border border-gray-300 p-2">
+        <img
+          src={medicine.image}
+          alt={medicine.name}
+          className="w-16 h-16 object-cover"
+        />
+      </td>
+      <td className="border border-gray-300 p-2">{medicine.name}</td>
+      <td className="border border-gray-300 p-2">{medicine.genericName}</td>
+      <td className="border border-gray-300 p-2">{medicine.company}</td>
+      <td className="border border-gray-300 p-2">${medicine.price}</td>
+      <td className="border border-gray-300 p-2 space-x-2">
+        <button
+          className="btn btn-sm btn-primary"
+          onClick={() => handleViewDetails(medicine)}
+        >
+          Eye
+        </button>
+        <button
+          className="btn btn-sm btn-secondary"
+          onClick={() => handleSelectMedicine(medicine)}
+        >
+          Select
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+
+
         </table>
       </div>
 

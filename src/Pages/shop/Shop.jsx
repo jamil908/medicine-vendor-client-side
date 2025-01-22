@@ -27,6 +27,7 @@ const Shop = () => {
       return response.data;
     },
   });
+  console.log(medicines)
 
   // Debugging API response structure
   console.log("Medicines data:", medicines);
@@ -35,79 +36,137 @@ const Shop = () => {
   // Safely log cart details
   console.log(cart[0]?.company || "No company data available");
 
+  // const handleSelectMedicine = (medicine) => {
+  //    if (user && user.email) {
+  //      if (!cart.find((item) => item.id === medicine.id)) {
+  //        const updatedCart = [...cart, medicine];
+  //        setCart(updatedCart);
+ 
+  //        const cartItem = {
+  //          ...medicine,
+  //          userEmail: user.email,
+  //          quantity:1
+  //        };
+ 
+  //        axiosSecure
+  //          .post('/carts', cartItem)
+  //          .then((response) => {
+  //            if (response.data.insertedId) {
+  //              Swal.fire({
+  //                title: `Your ${medicine.name} has been added to the cart.`,
+  //                width: 600,
+  //                padding: '3em',
+  //                color: '#716add',
+  //                background: '#fff url(/images/trees.png)',
+  //                backdrop: `
+  //                  rgba(0,0,123,0.4)
+  //                  url("/images/nyan-cat.gif")
+  //                  left top
+  //                  no-repeat
+  //                `,
+  //              });
+  //              refetch()
+  //            }
+  //          })
+  //          .catch((error) => {
+  //            console.error('Error adding to cart:', error);
+  //            Swal.fire({
+  //              position: 'top-end',
+  //              icon: 'error',
+  //              title: 'Failed to add item to the cart.',
+  //              showConfirmButton: false,
+  //              timer: 1500,
+  //            });
+  //          });
+  //      } else {
+  //        Swal.fire({
+  //          position: 'top-end',
+  //          icon: 'error',
+  //          title: `${medicine.name} is already in the cart.`,
+  //          showConfirmButton: false,
+  //          timer: 1500,
+  //        });
+  //      }
+  //    } else {
+  //      Swal.fire({
+  //        title: 'You are not logged in',
+  //        text: 'Please log in to add items to the cart.',
+  //        icon: 'warning',
+  //        showCancelButton: true,
+  //        confirmButtonColor: '#3085d6',
+  //        cancelButtonColor: '#d33',
+  //        confirmButtonText: 'Yes, login',
+  //      }).then((result) => {
+  //        if (result.isConfirmed) {
+  //          navigate('/login', { state: { from: location } });
+  //        }
+  //      });
+  //    }
+  //  };
+
+
   const handleSelectMedicine = (medicine) => {
     if (user && user.email) {
-      // Check if the medicine is already in the cart
       if (!cart.find((item) => item.id === medicine.id)) {
-        // Add the medicine to the cart state
         const updatedCart = [...cart, medicine];
         setCart(updatedCart);
-
-        // Create the cart item object to send to the server
+  
         const cartItem = {
           ...medicine,
-          userEmail: user.email, // Associate the cart item with the logged-in user
+          userEmail: user.email,
+          quantity: 1,
         };
-
-        // Post the cart item to the server
+  
+        // Ensure `_id` is removed before sending to the server
+        delete cartItem._id;
+  
         axiosSecure
-          .post("/carts", cartItem)
+          .post('/carts', cartItem)
           .then((response) => {
             if (response.data.insertedId) {
               Swal.fire({
                 title: `Your ${medicine.name} has been added to the cart.`,
-                width: 600,
-                padding: "3em",
-                color: "#716add",
-                background: "#fff url(/images/trees.png)",
-                backdrop: `
-                  rgba(0,0,123,0.4)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
+                // SweetAlert configurations
               });
               refetch();
             }
           })
           .catch((error) => {
-            console.error("Error adding to cart:", error);
+            console.error('Error adding to cart:', error);
             Swal.fire({
-              position: "top-end",
-              icon: "error",
-              title: "Failed to add item to the cart.",
+              position: 'top-end',
+              icon: 'error',
+              title: 'Failed to add item to the cart.',
               showConfirmButton: false,
               timer: 1500,
             });
           });
       } else {
-        // If the medicine is already in the cart
         Swal.fire({
-          position: "top-end",
-          icon: "error",
+          position: 'top-end',
+          icon: 'error',
           title: `${medicine.name} is already in the cart.`,
           showConfirmButton: false,
           timer: 1500,
         });
       }
     } else {
-      // If the user is not logged in
       Swal.fire({
-        title: "You are not logged in",
-        text: "Please log in to add items to the cart.",
-        icon: "warning",
+        title: 'You are not logged in',
+        text: 'Please log in to add items to the cart.',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, login",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, login',
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/login", { state: { from: location } });
+          navigate('/login', { state: { from: location } });
         }
       });
     }
   };
-
+  
   const handleViewDetails = (medicine) => setSelectedMedicine(medicine);
   const closeModal = () => setSelectedMedicine(null);
 
@@ -129,43 +188,40 @@ const Shop = () => {
             <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
+
         <tbody>
-          {(() => {
-            let serial = 1; // Serial counter
-            return medicines.map((category) =>
-              category.medicines?.map((medicine) => (
-                <tr key={medicine.id} className="hover:bg-gray-100">
-                  <td className="border px-4 py-2">{serial++}</td> {/* Serial Number */}
-                  <td className="border px-4 py-2">
-                    <img
-                      src={medicine.image}
-                      alt={medicine.name}
-                      className="w-12 h-12 object-cover"
-                    />
-                  </td>
-                  <td className="border px-4 py-2">{medicine.name}</td>
-                  <td className="border px-4 py-2">{medicine.genericName}</td>
-                  <td className="border px-4 py-2">${medicine.price}</td>
-                  <td className="border px-4 py-2">{medicine.company}</td>
-                  <td className="border px-4 py-2 space-x-2">
-                    <button
-                      className="btn btn-sm btn-primary"
-                      onClick={() => handleViewDetails(medicine)}
-                    >
-                      Eye
-                    </button>
-                    <button
-                      className="btn btn-sm btn-secondary"
-                      onClick={() => handleSelectMedicine(medicine)}
-                    >
-                      Select
-                    </button>
-                  </td>
-                </tr>
-              ))
-            );
-          })()}
-        </tbody>
+            {medicines.map((medicine, index) => (
+              <tr key={medicine.id} className="hover:bg-gray-100">
+                <td className="border px-4 py-2">{index + 1}</td>
+                <td className="border px-4 py-2">
+                  <img
+                    src={medicine.image}
+                    alt={medicine.name}
+                    className="w-12 h-12 object-cover"
+                  />
+                </td>
+                <td className="border px-4 py-2">{medicine.name}</td>
+                <td className="border px-4 py-2">{medicine.genericName}</td>
+                <td className="border px-4 py-2">${medicine.price}</td>
+                <td className="border px-4 py-2">{medicine.company}</td>
+                <td className="border px-4 py-2 space-x-2">
+                  <button
+                    className="btn btn-sm btn-primary"
+                    onClick={() => handleViewDetails(medicine)}
+                  >
+                    Eye
+                  </button>
+                  <button
+                    className="btn btn-sm btn-secondary"
+                    onClick={() => handleSelectMedicine(medicine)}
+                  >
+                    Select
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        
       </table>
 
       {/* Modal */}

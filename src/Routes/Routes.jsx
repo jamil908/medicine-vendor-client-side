@@ -8,7 +8,7 @@ import Login from "../Pages/login/Login";
 import Register from "../Pages/login/Register";
 import PrivateRoute from "../Pages/Private/PrivateRoute";
 import Shop from "../Pages/shop/Shop";
-// import Shop from "../Pages/shop/Shop";
+import Cart from "../Pages/cart/Cart";
   
   export const router = createBrowserRouter([
     {
@@ -34,6 +34,10 @@ import Shop from "../Pages/shop/Shop";
         {
             path:'/shop',
             element:<Shop></Shop>
+        },
+        {
+            path:'/cart',
+            element:<Cart></Cart>
         },
       ]
     },
