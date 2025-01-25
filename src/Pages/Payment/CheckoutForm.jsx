@@ -1,9 +1,29 @@
-import React from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import React, { useContext, useEffect, useState } from "react";
+import { CardElement, useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import UseAuth from "../../Hooks/useAuth/UseAuth";
+import useCart from "../../Hooks/useCart/useCart";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const CheckoutForm = ({ total }) => {
+  const[cart,refetch]=useCart()
+  const {user}=UseAuth();
+  const {setLoading}=useContext(AuthContext)
   const stripe = useStripe();
   const elements = useElements();
+  const axiosSecure=useAxiosSecure();
+  const [clientSecrete,setClientSecrete]=useState('');
+  const [transactionId,setTransitionId]=useState();
+  console.log(cart)
+  console.log(setLoading)
+
+  useEffect(() => {
+        axiosSecure.post('/create-payment-intent', { price: total })
+        .then(res =>{
+          console.log('clientsecrete',res.data.clientSecrete)
+          setClientSecrete(res.data.clientSecrete);
+        })
+    },[axiosSecure, total]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,23 +44,58 @@ const CheckoutForm = ({ total }) => {
 
     if (error) {
       console.error("Payment error:", error.message);
-    } else {
-      console.log("Payment success:", paymentMethod);
-      // Process payment on the backend here
+    }
+
+    const {paymentIntent,error :confirmError} = await stripe.confirmCardPayment(clientSecrete,{
+      payment_method:{
+        card: card,
+        billing_details:{
+          email:user?.email || 'anonymous',
+          name :user?.displayName || 'anonymous'
+        }
+      }
+    })
+    if(confirmError){
+      console.log('confirm error')
+    }
+    else{
+      console.log('payment intent',paymentIntent)
+      if(paymentIntent.status === 'succeeded'){
+        console.log('transaction id',paymentIntent.id)
+        console.log("Payment success:", paymentMethod);
+        setTransitionId(paymentIntent.id)
+        const payment = {
+          name:user.displayName,
+          email:user.email,
+          price:total,
+          date: new Date(),
+          cartIds:cart.map(item=>item._id),
+          cartItemIds:cart.map(item=>item.id),
+          status:'pending',
+          transactionId:paymentIntent.id,
+        }
+        const res = await axiosSecure.post('/payments',payment);
+        console.log('payment saved',res.data)
+        refetch()
+      }
     }
   };
 
+
+ 
   return (
     <form onSubmit={handleSubmit}>
       <CardElement className="border p-2 rounded-md" />
       <button
         type="submit"
-        disabled={!stripe}
+        disabled={!stripe || !clientSecrete }
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
       >
         Pay ${total.toFixed(2)}
       </button>
+      {transactionId && <p className=" text-green-600">your transaction id {transactionId} </p>}
     </form>
+
   );
 };
 

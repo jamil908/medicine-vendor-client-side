@@ -42,7 +42,7 @@ import Payment from "../Pages/Payment/Payment";
         },
         {
             path:'/checkout',
-            element:<Payment></Payment>
+            element:<PrivateRoute><Payment></Payment></PrivateRoute>
         },
       ]
     },

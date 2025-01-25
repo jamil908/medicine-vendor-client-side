@@ -3,9 +3,9 @@ import useCart from '../../Hooks/useCart/useCart';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './CheckoutForm';
-const stripePromise = loadStripe("your-publishable-stripe-key");
+const stripePromise = loadStripe(import.meta.env.VITE_PK_API_KEY);
 const Payment = () => {
-    const[cart,]=useCart();
+    const[cart]=useCart();
     const totalValue =   cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
     // setTotal(totalValue);
     return (
