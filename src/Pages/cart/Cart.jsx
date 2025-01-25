@@ -115,9 +115,14 @@ const Cart = () => {
         >
           Clear Cart
         </button>
-        <Link to="/checkout" className="ml-4 px-4 py-2 bg-blue-500 text-white rounded">
-          Checkout
-        </Link>
+        {
+          !cart.length ? <>
+         
+        <button className=" btn btn-primary">Checkout</button>
+          </> : <> <Link  to="/checkout" className="ml-4 px-4 py-2 bg-blue-500 text-white rounded">
+          <button>Checkout</button>
+        </Link></>
+        }
       </div>
     </div>
   );

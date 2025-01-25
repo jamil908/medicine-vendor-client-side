@@ -9,6 +9,7 @@ import Register from "../Pages/login/Register";
 import PrivateRoute from "../Pages/Private/PrivateRoute";
 import Shop from "../Pages/shop/Shop";
 import Cart from "../Pages/cart/Cart";
+import Payment from "../Pages/Payment/Payment";
   
   export const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ import Cart from "../Pages/cart/Cart";
         {
             path:'/cart',
             element:<Cart></Cart>
+        },
+        {
+            path:'/checkout',
+            element:<Payment></Payment>
         },
       ]
     },
