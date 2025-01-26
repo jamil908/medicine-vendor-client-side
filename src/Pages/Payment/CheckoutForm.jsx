@@ -4,8 +4,11 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import UseAuth from "../../Hooks/useAuth/UseAuth";
 import useCart from "../../Hooks/useCart/useCart";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CheckoutForm = ({ total }) => {
+  const navigate = useNavigate();
   const[cart,refetch]=useCart()
   const {user}=UseAuth();
   const {setLoading}=useContext(AuthContext)
@@ -77,6 +80,14 @@ const CheckoutForm = ({ total }) => {
         const res = await axiosSecure.post('/payments',payment);
         console.log('payment saved',res.data)
         refetch()
+        navigate(`/invoice/${paymentIntent.id}`);
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: `Your ${total} has been paid`,
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
     }
   };

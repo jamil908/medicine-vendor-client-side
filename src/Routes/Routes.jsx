@@ -10,6 +10,7 @@ import PrivateRoute from "../Pages/Private/PrivateRoute";
 import Shop from "../Pages/shop/Shop";
 import Cart from "../Pages/cart/Cart";
 import Payment from "../Pages/Payment/Payment";
+import Invoice from "../Pages/Invoice/Invoice";
   
   export const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ import Payment from "../Pages/Payment/Payment";
             path:'/checkout',
             element:<PrivateRoute><Payment></Payment></PrivateRoute>
         },
+        {
+          path:"/invoice/:transactionId",
+          element:<Invoice></Invoice>
+      },
       ]
     },
   ]);
