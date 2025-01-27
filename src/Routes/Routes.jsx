@@ -11,6 +11,8 @@ import Shop from "../Pages/shop/Shop";
 import Cart from "../Pages/cart/Cart";
 import Payment from "../Pages/Payment/Payment";
 import Invoice from "../Pages/Invoice/Invoice";
+import AdminDashboard from "../AdminLayout/AdminPage/AdminDashboard";
+import ManageUsers from "../AdminLayout/AdminPage/manageUser/ManageUsers";
   
   export const router = createBrowserRouter([
     {
@@ -51,4 +53,22 @@ import Invoice from "../Pages/Invoice/Invoice";
       },
       ]
     },
+    {
+      path: '/admin',
+      element: <AdminDashboard></AdminDashboard>,
+      children: [
+        {
+          path: 'users',
+          element: <ManageUsers></ManageUsers>
+        },
+        // {
+        //   path: 'categories',
+        //   element: <ManageCategories />
+        // },
+        // {
+        //   path: 'payments',
+        //   element: <PaymentManagement />
+        // },
+      ]
+    }
   ]);

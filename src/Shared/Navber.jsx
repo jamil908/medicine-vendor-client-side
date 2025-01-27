@@ -96,7 +96,7 @@ const Navber = () => {
                   </span>
                 </li>
                 <li>
-                  <span className="text-gray-500">{user.email}</span>
+                <Link to='/admin'>AdminDashboard</Link>
                 </li>
                 <li>
                   <button

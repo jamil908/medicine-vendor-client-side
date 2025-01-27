@@ -75,10 +75,19 @@ const AuthProvider = ({ children }) => {
             email: currentUser.email,
           });
         }
+        const userInfo = {email: currentUser.email};
+        axiosSecure.post('/jwt',userInfo)
+        .then(res =>{
+          if(res.data.token){
+            localStorage.setItem('access-token',res.data.token)
+          }
+        })
 
         setUser(currentUser);
       } else {
         setUser(null);
+        localStorage.removeItem('access-token');
+
       }
       setLoading(false);
     });
