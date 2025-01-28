@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Modal from '../../Shared/Modal';
@@ -10,6 +10,7 @@ import useCart from '../../Hooks/useCart/useCart';
 
 const CategoryDetails = () => {
   const { categoryName } = useParams();
+  const navigate = useNavigate()
   console.log(categoryName)
   const { user } = UseAuth();
   const axiosSecure = useAxiosSecure();

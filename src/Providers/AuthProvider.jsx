@@ -12,13 +12,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAxiosPublic from "../Hooks/axiosPublic/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -41,6 +41,7 @@ const AuthProvider = ({ children }) => {
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
+    
   };
 
   const updateUserProfile = async (name, photo) => {
@@ -53,7 +54,7 @@ const AuthProvider = ({ children }) => {
     await auth.currentUser.reload();
     const updatedUser = auth.currentUser;
 
-    await axiosSecure.post(`/users/${updatedUser.email}`, {
+    await axiosPublic.post(`/users/${updatedUser.email}`, {
       name: updatedUser.displayName,
       image: updatedUser.photoURL,
       email: updatedUser.email,
@@ -69,14 +70,14 @@ const AuthProvider = ({ children }) => {
 
         // Check and save user to database
         if (currentUser.displayName && currentUser.photoURL) {
-          await axiosSecure.post(`/users/${currentUser.email}`, {
+          await axiosPublic.post(`/users/${currentUser.email}`, {
             name: currentUser.displayName,
             image: currentUser.photoURL,
             email: currentUser.email,
           });
         }
         const userInfo = {email: currentUser.email};
-        axiosSecure.post('/jwt',userInfo)
+        axiosPublic.post('/jwt',userInfo)
         .then(res =>{
           if(res.data.token){
             localStorage.setItem('access-token',res.data.token)
@@ -93,7 +94,7 @@ const AuthProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, [axiosSecure]);
+  }, [axiosPublic]);
 
   const authInfo = {
     user,
