@@ -7,7 +7,7 @@ const AdminDashboard = () => {
     return (
         <div className="flex">
         {/* Sidebar */}
-        <div className="w-1/4 bg-gray-200 p-5">
+        <div className="w-1/4 bg-cyan-500  text-white p-5">
           <h2 className="text-xl font-bold mb-4">Admin Dashboard</h2>
           <ul>
           {

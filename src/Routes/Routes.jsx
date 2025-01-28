@@ -13,6 +13,8 @@ import Payment from "../Pages/Payment/Payment";
 import Invoice from "../Pages/Invoice/Invoice";
 import AdminDashboard from "../AdminLayout/AdminPage/AdminDashboard";
 import ManageUsers from "../AdminLayout/AdminPage/manageUser/ManageUsers";
+import ManageCategory from "../AdminLayout/AdminPage/manageCategory/ManageCategory";
+import AdminRoute from "../AdminLayout/adminRoute/AdminRoute";
   
   export const router = createBrowserRouter([
     {
@@ -59,12 +61,12 @@ import ManageUsers from "../AdminLayout/AdminPage/manageUser/ManageUsers";
       children: [
         {
           path: 'users',
-          element: <ManageUsers></ManageUsers>
+          element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
         },
-        // {
-        //   path: 'categories',
-        //   element: <ManageCategories />
-        // },
+        {
+          path: 'categories',
+          element: <AdminRoute><ManageCategory></ManageCategory></AdminRoute>
+        },
         // {
         //   path: 'payments',
         //   element: <PaymentManagement />
