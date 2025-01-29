@@ -40,15 +40,16 @@ const DiscountSlider = () => {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">🔥 Discounted Products</h2>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={1}
         spaceBetween={20}
         freeMode={true}
         pagination={{ clickable: true }}
         modules={[FreeMode, Pagination]}
         className="mySwiper"
+        id="discount"
       >
         {discountProducts.map((product) => (
-          <SwiperSlide key={product.id} className="p-4 bg-white shadow-lg rounded-xl">
+          <SwiperSlide key={product.id} className="p-4 discount-image bg-white shadow-lg rounded-xl">
             <img src={product.image} alt={product.name} className="w-full h-32 object-cover rounded-lg" />
             <h3 className="mt-2 text-lg font-semibold">{product.name}</h3>
             <p className="text-gray-500 line-through">${product.originalPrice}</p>

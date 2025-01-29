@@ -13,3 +13,13 @@
 .thumbs-wrapper {
     display: none !important;
 }
+
+.discount-image {
+ width: 30% !important;
+}
+@media screen and (max-width: 640px) {
+    .discount-image {
+      width: 100% !important;  /* Adjust the width for small devices */
+      height: auto;
+    }
+}

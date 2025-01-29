@@ -14,7 +14,8 @@ const AdminDashboard = () => {
             isAdmin ? <>
             <li><Link to="/admin/users">Manage Users</Link></li>
             <li><Link to="/admin/categories">Manage Categories</Link></li>
-            <li><Link to="/admin/payments">Payment Management</Link></li>
+            {/* <li><Link to="/admin/payments">Payment Management</Link></li> */}
+            <li><Link to="/admin/salesReport">Sales Report</Link></li>
             <li><Link to="/">Home</Link></li></>:<><Link to="/">Home</Link></>
           }
           </ul>
