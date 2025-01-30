@@ -3,10 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import './Navber.css';
 import { AuthContext } from '../Providers/AuthProvider';
 import useCart from '../Hooks/useCart/useCart';
+import useAdmin from '../Hooks/isAdmin/useAdmin';
 
 const Navber = () => {
   const { user, logOut } = useContext(AuthContext);
   const [cart] = useCart()
+  const [isAdmin,isAdminLoading]=useAdmin();
 
   const handleLogOut = () => {
     logOut()
@@ -95,9 +97,9 @@ const Navber = () => {
                     {user?.displayName || 'Anonymous User'}
                   </span>
                 </li>
-                <li>
-                <Link to='/admin'>AdminDashboard</Link>
-                </li>
+                {user && isAdmin &&  <li>
+                    <Link to='/admin'>Admin Dashboard</Link>
+                  </li>}
                 <li>
                   <button
                     className="btn btn-sm btn-primary mt-2"
@@ -131,3 +133,5 @@ const Navber = () => {
 };
 
 export default Navber;
+
+

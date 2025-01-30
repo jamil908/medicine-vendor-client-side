@@ -39,17 +39,21 @@ const SalesReport = () => {
     };
 
     
+    const totalSales = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
 
     return (
         <div>
             <h2>Sales Report</h2>
-            <div className="mb-4">
+           <div className='flex justify-between'>
+           <div className="mb-4">
                 <button onClick={exportToPDF} className="bg-blue-500 text-white px-4 py-2 mr-2">Export to PDF</button>
                 <CSVLink data={cart} filename={"SalesReport.csv"}>
                     <button className="bg-yellow-500 text-white px-4 py-2 mr-2">Export to CSV</button>
                 </CSVLink>
                 <button onClick={exportToXLSX} className="bg-red-500 text-white px-4 py-2">Export to XLSX</button>
             </div>
+            <p className='text-2xl font-bold text-slate-900'>total sales:${totalSales}</p>
+           </div>
 
             <table className="table-auto w-full border-collapse border border-gray-300">
                 <thead>

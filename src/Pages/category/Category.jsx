@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const Category = () => {
   const { data: categories = [], isLoading, error } = useCategory();
 
-  if (isLoading) return <p className="text-center text-blue-500">Loading categories...</p>;
+  if (isLoading) return <span className="loading  justify-center flex mx-auto items-center  loading-bars text-cyan-500 loading-lg"></span>;
   if (error) return <p className="text-center text-red-500">Failed to load categories: {error.message}</p>;
 
   return (
