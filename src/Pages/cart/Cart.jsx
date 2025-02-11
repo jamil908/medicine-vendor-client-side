@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useCart from "../../Hooks/useCart/useCart";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import UseAuth from "../../Hooks/useAuth/UseAuth";
+import useAxiosPublic from "../../Hooks/axiosPublic/useAxiosPublic";
 
 const Cart = () => {
   const [cart, refetch] = useCart();
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const {user}=UseAuth();
   console.log(cart)
 
-  // Handle API requests with axiosSecure
+  // Handle API requests with axiosPublic
   const handleCartAction = async (url, method, data = null) => {
     try {
       const options = {
@@ -18,7 +18,7 @@ const Cart = () => {
         url,
         data,
       };
-      await axiosSecure(options);
+      await axiosPublic(options);
       refetch(); // Refetch the updated cart
     } catch (error) {
       console.error("Error handling cart action:", error);
@@ -53,7 +53,7 @@ const Cart = () => {
       const email = user?.email;
   
       if (email) {
-        await axiosSecure.delete(`/carts?email=${email}`); // Make DELETE request to the backend
+        await axiosPublic.delete(`/carts?email=${email}`); // Make DELETE request to the backend
         refetch(); // Refetch the updated cart items
         alert("Cart cleared successfully!");
       } else {

@@ -12,6 +12,7 @@ import Cart from "../Pages/cart/Cart";
 import Payment from "../Pages/Payment/Payment";
 import Invoice from "../Pages/Invoice/Invoice";
 import AdminDashboard from "../AdminLayout/AdminPage/AdminDashboard";
+import SellerDashboard from "../SellerLayout/SellerDashboard";
 import ManageUsers from "../AdminLayout/AdminPage/manageUser/ManageUsers";
 import ManageCategory from "../AdminLayout/AdminPage/manageCategory/ManageCategory";
 import AdminRoute from "../AdminLayout/adminRoute/AdminRoute";
@@ -73,5 +74,10 @@ import SalesReport from "../AdminLayout/AdminPage/salesReport/SalesReport";
           element: <AdminRoute><SalesReport></SalesReport></AdminRoute>
         },
       ]
+    },
+    {
+      path:'/seller',
+      element:<SellerDashboard></SellerDashboard>
+
     }
   ]);

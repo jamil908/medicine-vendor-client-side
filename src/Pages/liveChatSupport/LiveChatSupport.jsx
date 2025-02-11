@@ -15,11 +15,11 @@ const LiveChatSupport = () => {
   };
 
   return (
-    <div className="p-6 bg-blue-100 rounded-lg shadow-md">
+    <div className="p-6  rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Live Chat & Customer Support</h2>
-      <div className="h-64 bg-white p-4 rounded-md shadow overflow-y-auto">
+      <div className="h-32 border-2 border-fuchsia-600 p-4 rounded-md shadow overflow-y-auto">
         {messages.map((msg, index) => (
-          <div key={index} className={`p-2 my-1 rounded-md ${msg.sender === "user" ? "bg-green-200 text-right" : "bg-gray-300"}`}>
+          <div key={index} className={`p-2 my-1 rounded-md ${msg.sender === "user" ? "bg-blue-800 text-white text-right" : "bg-gray-300"}`}>
             {msg.text}
           </div>
         ))}

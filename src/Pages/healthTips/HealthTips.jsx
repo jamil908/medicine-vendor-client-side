@@ -12,13 +12,13 @@ const HealthTips = () => {
     ];
   
     return (
-      <div className="p-6 bg-gray-100 rounded-lg shadow-md">
+      <div className="p-6  rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-4">Health Tips & Blogs</h2>
         <div className="space-y-4">
           {tips.map((tip) => (
-            <div key={tip.id} className="p-4 bg-white rounded-md shadow">
+            <div key={tip.id} className="p-4 bg-gray-700  rounded-md shadow">
               <h3 className="text-xl font-semibold">{tip.title}</h3>
-              <p className="text-gray-600">{tip.content}</p>
+              <p className="text-gray-400">{tip.content}</p>
             </div>
           ))}
         </div>

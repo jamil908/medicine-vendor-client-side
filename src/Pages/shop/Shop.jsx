@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Modal from "../../Shared/Modal";
 import Swal from "sweetalert2";
 import UseAuth from "../../Hooks/useAuth/UseAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import useCart from "../../Hooks/useCart/useCart";
+import useAxiosPublic from "../../Hooks/axiosPublic/useAxiosPublic";
 
 const Shop = () => {
   const { user } = UseAuth();
@@ -17,13 +17,13 @@ const Shop = () => {
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [cart, setCart] = useState([]);
  console.log(cart)
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
 
   // Fetch medicines data
   const { data: medicines = [], isLoading, error } = useQuery({
     queryKey: ["medicines"],
     queryFn: async () => {
-      const response = await axiosSecure.get("/medicines");
+      const response = await axiosPublic.get("/medicines");
       return response.data;
     },
   });
@@ -53,7 +53,7 @@ const Shop = () => {
         // Ensure `_id` is removed before sending to the server
         delete cartItem._id;
   
-        axiosSecure
+        axiosPublic
           .post('/carts', cartItem)
           .then((response) => {
             if (response.data.insertedId) {
@@ -109,54 +109,43 @@ const Shop = () => {
   return (
     <div className="container mx-auto my-8">
       <h2 className="text-3xl font-bold text-center mb-6">Medicines Shop</h2>
-      <table className="table-auto w-full border border-gray-300">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="px-4 py-2">No</th>
-            <th className="px-4 py-2">Image</th>
-            <th className="px-4 py-2">Name</th>
-            <th className="px-4 py-2">Generic Name</th>
-            <th className="px-4 py-2">Price</th>
-            <th className="px-4 py-2">Company</th>
-            <th className="px-4 py-2">Actions</th>
-          </tr>
-        </thead>
+     <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mx-auto w-fit  lg:grid-cols-4  gap-7">
+     {medicines.map((medicine,index)=>(
+      <div
+  className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[rgba(75,30,133,1)] to-[rgba(75,30,133,0.01)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px] overflow-hidden"
+>
+  <div className="relative w-full h-[12em]">
+    <img
+      alt={medicine.name}
+      src={medicine.image}
+      className="w-full h-full object-cover rounded-md"
+    />
+  </div>
+  <div className="flex justify-between">
+    <div>
+      <h3 className="text-sm font-medium">name: {medicine.name}</h3>
+      <h3 className="text-sm font-medium">company: {medicine.genericName}</h3>
+    </div>
+    <h3 className="text-sm font-medium">price: ${medicine.price}</h3>
+  </div>
+  <button
+    className="btn btn-sm btn-primary"
+    onClick={() => handleViewDetails(medicine)}
+  >
+    Eye
+  </button>
+  <button
+    className="btn btn-sm btn-secondary"
+    onClick={() => handleSelectMedicine(medicine)}
+  >
+    Select
+  </button>
+</div>
 
-        <tbody>
-            {medicines.map((medicine, index) => (
-              <tr key={medicine.id} className="hover:bg-gray-100">
-                <td className="border px-4 py-2">{index + 1}</td>
-                <td className="border px-4 py-2">
-                  <img
-                    src={medicine.image}
-                    alt={medicine.name}
-                    className="w-12 h-12 object-cover"
-                  />
-                </td>
-                <td className="border px-4 py-2">{medicine.name}</td>
-                <td className="border px-4 py-2">{medicine.genericName}</td>
-                <td className="border px-4 py-2">${medicine.price}</td>
-                <td className="border px-4 py-2">{medicine.company}</td>
-                <td className="border px-4 py-2 space-x-2">
-                  <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => handleViewDetails(medicine)}
-                  >
-                    Eye
-                  </button>
-                  <button
-                    className="btn btn-sm btn-secondary"
-                    onClick={() => handleSelectMedicine(medicine)}
-                  >
-                    Select
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        
-      </table>
+))}
+     </div>
 
+   
       {/* Modal */}
       {selectedMedicine && (
         <Modal isOpen={true} onRequestClose={closeModal}>
