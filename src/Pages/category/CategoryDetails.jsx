@@ -319,21 +319,21 @@ const CategoryDetails = () => {
   const closeModal = () => setSelectedMedicine(null);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container  py-4">
       <h2 className="text-3xl font-bold text-center mb-8">
         Medicines in Category: {categoryName}
       </h2>
-      <div className="grid grid-cols-1 mx-auto w-fit md:grid-cols-4 gap-7">
+      <div className="grid grid-cols-1 mx-auto justify-between w-fit md:grid-cols-3 lg:grid-cols-4 gap-4">
         {medicines.map((medicine, index) => (
           <div
             key={index}
             // className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[rgba(75,30,133,1)] to-[rgba(75,30,133,0.01)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px]"
-            className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[#1e7685] to-[rgba(42,128,136,0.81)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px]"
+            className="h-[20em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[#1e7685] to-[rgba(42,128,136,0.81)] text-white  p-2 flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px]"
           >
             <img
               alt={medicine.name}
               src={medicine.image}
-              className="w-48 h-48 rounded-md object-cover"
+              className="w-full h-32 object-fill rounded-md "
             />
             <div className="flex justify-between">
               <div>

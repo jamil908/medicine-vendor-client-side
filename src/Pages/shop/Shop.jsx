@@ -113,13 +113,13 @@ const Shop = () => {
      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mx-auto w-fit  lg:grid-cols-4  gap-7">
      {medicines.map((medicine,index)=>(
       <div
-  className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[#1e7685] to-[rgba(46,165,176,0.95)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px] overflow-hidden"
+  className="h-[20em] w-[20em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[#1e7685] to-[rgba(46,165,176,0.95)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px] overflow-hidden"
 >
   <div className="relative w-full h-[12em]">
     <img
       alt={medicine.name}
       src={medicine.image}
-      className="w-full h-full object-cover rounded-md"
+      className="w-full h-32 object-fill rounded-md"
     />
   </div>
   <div className="flex justify-between">
