@@ -22,10 +22,10 @@ const Navber = () => {
   };
 
   return (
-    <nav className="navbar bg-transparent  backdrop-blur-md container sticky top-0 z-40">
-      <div className="flex justify-between items-center w-full px-4 py-3">
+    <nav className="navbar  bg-teal-500 text-white   backdrop-blur-md container sticky top-0 z-40">
+      <div className="flex justify-between items-center w-full px-4 ">
         {/* Logo */}
-        <Link to="/" className="text-red-600 font-bold text-xl">
+        <Link to="/" className="text-teal-200 font-bold text-xl">
           +MediBazer
         </Link>
 
@@ -110,7 +110,7 @@ const Navber = () => {
 
       {/* Mobile Menu Dropdown */}
       {menuOpen && (
-        <div className="lg:hidden flex flex-col items-center bg-transparent bg-cyan-400 o  shadow-md absolute top-16 left-0 w-full z-50 py-4">
+        <div className="lg:hidden flex flex-col items-center bg-transparent bg-white  shadow-md absolute top-16 left-0 w-full z-50 py-2">
           <NavLink to="/" className="py-2" onClick={() => setMenuOpen(false)}>Home</NavLink>
           <NavLink to="/shop" className="py-2" onClick={() => setMenuOpen(false)}>Shop</NavLink>
           <NavLink to="/cart" className="relative py-2" onClick={() => setMenuOpen(false)}>

@@ -37,7 +37,7 @@ const discountProducts = [
 
 const DiscountSlider = () => {
   return (
-    <div className="p-6">
+    <div className="py-4">
       <h2 className="text-2xl font-bold mb-4">🔥 Discounted Products</h2>
       <Swiper
         slidesPerView={1}
@@ -49,7 +49,7 @@ const DiscountSlider = () => {
         id="discount"
       >
         {discountProducts.map((product) => (
-          <SwiperSlide key={product.id} className="p-4 discount-image bg-white shadow-lg rounded-xl">
+          <SwiperSlide key={product.id} className="py-4 discount-image bg-white shadow-lg rounded-xl">
             <img src={product.image} alt={product.name} className="w-full h-32 object-cover rounded-lg" />
             <h3 className="mt-2 text-lg font-semibold">{product.name}</h3>
             <p className="text-gray-500 line-through">${product.originalPrice}</p>

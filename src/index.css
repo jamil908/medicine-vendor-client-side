@@ -24,8 +24,10 @@
     }
 }
 body{
-    color: rgb(189, 29, 181) !important;
-background-color: black !important;
+    /* color: rgb(189, 29, 181) !important; */
+    color: lightseagreen !important;
+/* background-color:black !important; */
+width: 100% !important;
 }
 
 

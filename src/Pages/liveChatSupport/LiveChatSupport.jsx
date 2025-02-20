@@ -15,7 +15,7 @@ const LiveChatSupport = () => {
   };
 
   return (
-    <div className="p-6  rounded-lg shadow-md">
+    <div className="py-4  rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Live Chat & Customer Support</h2>
       <div className="h-32 border-2 border-fuchsia-600 p-4 rounded-md shadow overflow-y-auto">
         {messages.map((msg, index) => (

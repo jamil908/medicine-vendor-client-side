@@ -9,13 +9,13 @@ const Category = () => {
   if (error) return <p className="text-center text-red-500">Failed to load categories: {error.message}</p>;
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto py-4">
       <h2 className="text-3xl font-bold text-center mb-8">Medicine Categories</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {categories.map((category) => (
           <Link to={`/category/${category.categoryName}`} key={category._id}>
             <div 
-              className="h-[20rem] w-full max-w-xs border-2 border-[rgba(75,30,133,0.5)] rounded-2xl bg-gradient-to-br from-[rgba(75,30,133,1)] to-[rgba(75,30,133,0.01)] text-white font-nunito p-4 flex flex-col justify-between items-center backdrop-blur-lg overflow-hidden shadow-lg"
+              className="h-[20rem] w-full max-w-xs border-2 border-[rgba(75,30,133,0.5)] bg-gradient-to-br from-[rgba(75,30,133,1)] to-[rgba(75,30,133,0.01)]  rounded-2xl bg-transparent border-e-slate-800 text-white font-nunito p-4 flex flex-col justify-between items-center backdrop-blur-lg overflow-hidden shadow-lg"
             >
               <img
                 src={category.categoryImage}

@@ -6,7 +6,7 @@ const Faq = () => {
     ];
   
     return (
-      <div className="p-6  rounded-lg shadow-md">
+      <div className="py-4  rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
         {faqs.map((faq, index) => (
           <div key={index} className="mb-4">
