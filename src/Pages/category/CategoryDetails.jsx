@@ -213,6 +213,7 @@ import Modal from '../../Shared/Modal';
 import Swal from 'sweetalert2';
 import UseAuth from '../../Hooks/useAuth/UseAuth';
 import useCart from '../../Hooks/useCart/useCart';
+import { HiEye, HiShoppingBag, HiShoppingCart } from 'react-icons/hi';
 
 const CategoryDetails = () => {
   const { categoryName } = useParams();
@@ -326,7 +327,8 @@ const CategoryDetails = () => {
         {medicines.map((medicine, index) => (
           <div
             key={index}
-            className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[rgba(75,30,133,1)] to-[rgba(75,30,133,0.01)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px]"
+            // className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[rgba(75,30,133,1)] to-[rgba(75,30,133,0.01)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px]"
+            className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[#1e7685] to-[rgba(42,128,136,0.81)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px]"
           >
             <img
               alt={medicine.name}
@@ -344,14 +346,14 @@ const CategoryDetails = () => {
               <button
                 className="btn btn-sm btn-primary"
                 onClick={() => handleViewDetails(medicine)}
-              >
+              ><HiEye></HiEye>
                 Eye
               </button>
               <button
-                className="btn btn-sm btn-secondary"
+                className="btn btn-sm bg-teal-500"
                 onClick={() => handleSelectMedicine(medicine)}
-              >
-                Select
+              ><HiShoppingCart></HiShoppingCart>
+                buy
               </button>
             </div>
           </div>
@@ -380,7 +382,7 @@ const CategoryDetails = () => {
             <p>
               <strong>Description:</strong> {selectedMedicine.description}
             </p>
-            <button className="btn btn-error mt-4" onClick={closeModal}>
+            <button className="btn bg-teal-500 btn-error mt-4" onClick={closeModal}>
               Close
             </button>
           </div>

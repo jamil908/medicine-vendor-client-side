@@ -8,6 +8,7 @@ import UseAuth from "../../Hooks/useAuth/UseAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import useCart from "../../Hooks/useCart/useCart";
 import useAxiosPublic from "../../Hooks/axiosPublic/useAxiosPublic";
+import { HiEye, HiShoppingCart } from "react-icons/hi";
 
 const Shop = () => {
   const { user } = UseAuth();
@@ -112,7 +113,7 @@ const Shop = () => {
      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mx-auto w-fit  lg:grid-cols-4  gap-7">
      {medicines.map((medicine,index)=>(
       <div
-  className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[rgba(75,30,133,1)] to-[rgba(75,30,133,0.01)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px] overflow-hidden"
+  className="h-[16em] w-[18em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[#1e7685] to-[rgba(46,165,176,0.95)] text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px] overflow-hidden"
 >
   <div className="relative w-full h-[12em]">
     <img
@@ -131,14 +132,14 @@ const Shop = () => {
   <button
     className="btn btn-sm btn-primary"
     onClick={() => handleViewDetails(medicine)}
-  >
+  ><HiEye></HiEye>
     Eye
   </button>
   <button
-    className="btn btn-sm btn-secondary"
+    className="btn btn-sm bg-teal-500 "
     onClick={() => handleSelectMedicine(medicine)}
-  >
-    Select
+  ><HiShoppingCart></HiShoppingCart>
+    buy
   </button>
 </div>
 
@@ -168,7 +169,7 @@ const Shop = () => {
             <p>
               <strong>Description:</strong> {selectedMedicine.description}
             </p>
-            <button className="btn btn-error mt-4" onClick={closeModal}>
+            <button className="btn btn-error bg-teal-500 mt-4" onClick={closeModal}>
               Close
             </button>
           </div>
