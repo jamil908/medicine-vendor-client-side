@@ -17,6 +17,7 @@ import ManageUsers from "../AdminLayout/AdminPage/manageUser/ManageUsers";
 import ManageCategory from "../AdminLayout/AdminPage/manageCategory/ManageCategory";
 import AdminRoute from "../AdminLayout/adminRoute/AdminRoute";
 import SalesReport from "../AdminLayout/AdminPage/salesReport/SalesReport";
+import AdminChart from "../AdminLayout/AdminPage/AdminChart/AdminChart";
   
   export const router = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ import SalesReport from "../AdminLayout/AdminPage/salesReport/SalesReport";
       path: '/admin',
       element: <AdminDashboard></AdminDashboard>,
       children: [
+        {
+          path:'/admin',
+          element:<AdminChart></AdminChart>
+        },
         {
           path: 'users',
           element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
