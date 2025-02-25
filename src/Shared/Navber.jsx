@@ -110,7 +110,7 @@ const Navber = () => {
 
       {/* Mobile Menu Dropdown */}
       {menuOpen && (
-        <div className="lg:hidden flex flex-col items-center bg-transparent bg-white  shadow-md absolute top-16 left-0 w-full z-50 py-2">
+        <div className="lg:hidden flex flex-col items-center bg-transparent bg-white text-teal-500 shadow-md absolute top-16 left-0 w-full z-50 py-2">
           <NavLink to="/" className="py-2" onClick={() => setMenuOpen(false)}>Home</NavLink>
           <NavLink to="/shop" className="py-2" onClick={() => setMenuOpen(false)}>Shop</NavLink>
           <NavLink to="/cart" className="relative py-2" onClick={() => setMenuOpen(false)}>
@@ -127,8 +127,8 @@ const Navber = () => {
             </>
           ) : (
             <>
-              <NavLink to="/login" className="btn btn-sm my-2">Login</NavLink>
-              <NavLink to="/signup" className="btn btn-sm my-2">Sign Up</NavLink>
+              <NavLink to="/login" className="btn text-teal-500 border-2 border-teal-500 btn-sm my-2">Login</NavLink>
+              <NavLink to="/signup" className="btn text-teal-500 border-2 border-teal-500 btn-sm my-2">Sign Up</NavLink>
             </>
           )}
         </div>
