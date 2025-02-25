@@ -4,7 +4,7 @@
 Welcome to **Medicine Vendor**, a comprehensive platform designed for managing pharmaceutical inventories, showcasing advertised products, and generating sales reports. With features like dynamic querying, product management, sales analytics, and a responsive interface, this platform enhances the way medicine vendors operate.
 
 ### Live Site URL  
-Visit the live site here: [medicine-vendor.web.app](#)
+Visit the live site here: [https://medicine-for-you.web.app/](https://medicine-for-you.web.app/)
 
 ---
 
