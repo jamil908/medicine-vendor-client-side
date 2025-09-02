@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 .Carousel-root {
-    height: 500px !important;
+    height: 700px !important;
 
 }
 .slide img{
-    height: 300px !important;
+    height: 400px !important;
     object-fit: cover;
 }
 .thumbs-wrapper {
