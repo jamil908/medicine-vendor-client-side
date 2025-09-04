@@ -1,18 +1,20 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../Providers/AuthProvider';
-import useCart from '../Hooks/useCart/useCart';
-import useAdmin from '../Hooks/isAdmin/useAdmin';
-import useSeller from '../Hooks/isSeller/useSeller';
-import { 
-  ShoppingCart, 
-  User, 
-  Search, 
-  Phone, 
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../Providers/AuthProvider";
+import useCart from "../Hooks/useCart/useCart";
+import useAdmin from "../Hooks/isAdmin/useAdmin";
+import useSeller from "../Hooks/isSeller/useSeller";
+import "./Navber.css";
+import {
+  ShoppingCart,
+  User,
+  Search,
+  Phone,
   MapPin,
   Shield,
   Menu,
-  X
-} from 'lucide-react';
+  X,
+} from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
 
 const Navber = () => {
   // Use your actual context and hooks
@@ -24,21 +26,21 @@ const Navber = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => console.log('User logged out successfully.'))
-      .catch((error) => console.error('Error during logout:', error));
+      .then(() => console.log("User logged out successfully."))
+      .catch((error) => console.error("Error during logout:", error));
   };
 
-  const NavLink = ({ to, children, className, onClick }) => (
-    <a href={to} className={className} onClick={onClick}>
-      {children}
-    </a>
-  );
+  // const NavLink = ({ to, children, className, onClick }) => (
+  //   <a href={to} className={className} onClick={onClick}>
+  //     {children}
+  //   </a>
+  // );
 
-  const Link = ({ to, children, className }) => (
-    <a href={to} className={className}>
-      {children}
-    </a>
-  );
+  // const Link = ({ to, children, className }) => (
+  //   <a href={to} className={className}>
+  //     {children}
+  //   </a>
+  // );
 
   return (
     <>
@@ -69,8 +71,18 @@ const Navber = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
                 </svg>
               </div>
               <div>
@@ -95,26 +107,27 @@ const Navber = () => {
 
             {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center space-x-8">
-              <NavLink 
-                to="/" 
-                className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200 border-b-2 border-blue-600 pb-1"
+           
+              <NavLink
+                to="/"
+                className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200"
               >
                 Home
               </NavLink>
-              <NavLink 
-                to="/shop" 
+              <NavLink
+                to="/shop"
                 className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200"
               >
                 Shop
               </NavLink>
-              <NavLink 
-                to="/prescriptions" 
+              <NavLink
+                to="/prescriptions"
                 className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200"
               >
                 Prescriptions
               </NavLink>
-              <NavLink 
-                to="/health-info" 
+              <NavLink
+                to="/health-info"
                 className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200"
               >
                 Health Info
@@ -124,10 +137,11 @@ const Navber = () => {
             {/* Cart & User Section */}
             <div className="flex items-center space-x-4">
               {/* Cart */}
-              <NavLink 
-                to="/cart" 
-                className="relative p-2 text-slate-700 hover:text-blue-600 transition-colors duration-200"
+              <NavLink
+                to="/cart"
+                className="relative flex p-2 text-slate-700 hover:text-blue-600 transition-colors duration-200"
               >
+                Cart
                 <ShoppingCart className="w-6 h-6" />
                 {cart.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
@@ -152,7 +166,7 @@ const Navber = () => {
                       </div>
                     )}
                     <span className="hidden md:block text-slate-700 font-medium">
-                      {user.displayName || 'User'}
+                      {user.displayName || "User"}
                     </span>
                   </button>
 
@@ -160,11 +174,11 @@ const Navber = () => {
                   <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg border border-slate-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <div className="p-4 border-b border-slate-100">
                       <div className="font-semibold text-slate-800">
-                        {user.displayName || 'Anonymous User'}
+                        {user.displayName || "Anonymous User"}
                       </div>
                       <div className="text-sm text-slate-500">{user.email}</div>
                     </div>
-                    
+
                     <div className="py-2">
                       <Link
                         to="/profile"
@@ -184,7 +198,7 @@ const Navber = () => {
                       >
                         My Prescriptions
                       </Link>
-                      
+
                       {isAdmin && (
                         <Link
                           to="/admin"
@@ -193,7 +207,7 @@ const Navber = () => {
                           Admin Dashboard
                         </Link>
                       )}
-                      
+
                       {isSeller && (
                         <Link
                           to="/seller"
@@ -203,7 +217,7 @@ const Navber = () => {
                         </Link>
                       )}
                     </div>
-                    
+
                     <div className="border-t border-slate-100 p-2">
                       <button
                         onClick={handleLogOut}
@@ -216,14 +230,14 @@ const Navber = () => {
                 </div>
               ) : (
                 <div className="flex items-center space-x-2">
-                  <NavLink 
-                    to="/login" 
+                  <NavLink
+                    to="/login"
                     className="px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors duration-200"
                   >
                     Login
                   </NavLink>
-                  <NavLink 
-                    to="/signup" 
+                  <NavLink
+                    to="/signup"
                     className="px-4 py-2 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg hover:from-blue-700 hover:to-green-700 transition-all duration-200 font-medium shadow-md"
                   >
                     Sign Up
@@ -232,11 +246,15 @@ const Navber = () => {
               )}
 
               {/* Mobile Menu Button */}
-              <button 
+              <button
                 className="lg:hidden text-slate-700 p-2"
                 onClick={() => setMenuOpen(!menuOpen)}
               >
-                {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {menuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
               </button>
             </div>
           </div>
@@ -257,36 +275,36 @@ const Navber = () => {
           {menuOpen && (
             <div className="lg:hidden bg-white border-t border-slate-100 shadow-lg">
               <div className="px-4 py-2 space-y-1">
-                <NavLink 
-                  to="/" 
+                <NavLink
+                  to="/"
                   className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
                   onClick={() => setMenuOpen(false)}
                 >
                   Home
                 </NavLink>
-                <NavLink 
-                  to="/shop" 
+                <NavLink
+                  to="/shop"
                   className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
                   onClick={() => setMenuOpen(false)}
                 >
                   Shop
                 </NavLink>
-                <NavLink 
-                  to="/prescriptions" 
+                <NavLink
+                  to="/prescriptions"
                   className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
                   onClick={() => setMenuOpen(false)}
                 >
                   Prescriptions
                 </NavLink>
-                <NavLink 
-                  to="/health-info" 
+                <NavLink
+                  to="/health-info"
                   className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
                   onClick={() => setMenuOpen(false)}
                 >
                   Health Info
                 </NavLink>
-                <NavLink 
-                  to="/cart" 
+                <NavLink
+                  to="/cart"
                   className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -299,7 +317,7 @@ const Navber = () => {
                     )}
                   </div>
                 </NavLink>
-                
+
                 {/* Mobile User Section */}
                 {user ? (
                   <div className="border-t border-slate-100 pt-4 mt-4">
@@ -317,12 +335,14 @@ const Navber = () => {
                       )}
                       <div>
                         <div className="font-semibold text-slate-800 text-sm">
-                          {user.displayName || 'User'}
+                          {user.displayName || "User"}
                         </div>
-                        <div className="text-xs text-slate-500">{user.email}</div>
+                        <div className="text-xs text-slate-500">
+                          {user.email}
+                        </div>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-1 mt-2">
                       <Link
                         to="/profile"
@@ -336,7 +356,7 @@ const Navber = () => {
                       >
                         Order History
                       </Link>
-                      
+
                       {isAdmin && (
                         <Link
                           to="/admin"
@@ -345,7 +365,7 @@ const Navber = () => {
                           Admin Dashboard
                         </Link>
                       )}
-                      
+
                       {isSeller && (
                         <Link
                           to="/seller"
@@ -354,7 +374,7 @@ const Navber = () => {
                           Seller Dashboard
                         </Link>
                       )}
-                      
+
                       <button
                         onClick={() => {
                           handleLogOut();
@@ -368,15 +388,15 @@ const Navber = () => {
                   </div>
                 ) : (
                   <div className="border-t border-slate-100 pt-4 mt-4 space-y-2">
-                    <NavLink 
-                      to="/login" 
+                    <NavLink
+                      to="/login"
                       className="block px-3 py-2 text-center text-blue-600 font-medium hover:bg-blue-50 rounded-md transition-colors duration-200"
                       onClick={() => setMenuOpen(false)}
                     >
                       Login
                     </NavLink>
-                    <NavLink 
-                      to="/signup" 
+                    <NavLink
+                      to="/signup"
                       className="block px-3 py-2 text-center bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-md hover:from-blue-700 hover:to-green-700 transition-all duration-200 font-medium"
                       onClick={() => setMenuOpen(false)}
                     >

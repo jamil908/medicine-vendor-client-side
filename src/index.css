@@ -13,6 +13,9 @@
 .thumbs-wrapper {
     display: none !important;
 }
+.active{
+    border-bottom: 2px solid red !important;
+}
 
 .discount-image {
  width: 30% !important;
