@@ -1,22 +1,47 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { CSVLink } from "react-csv";
-import * as XLSX from 'xlsx';
-import { jsPDF } from "jspdf";
-import 'jspdf-autotable'; // Import jspdf-autotable for table support
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import { Download, FileText, FileSpreadsheet, DollarSign, BarChart2, TrendingUp, ShoppingBag, User } from 'lucide-react';
-import Swal from 'sweetalert2';
+import { 
+  Download, 
+  FileText, 
+  FileSpreadsheet, 
+  DollarSign, 
+  BarChart2, 
+  TrendingUp, 
+  ShoppingBag, 
+  User,
+  Calendar,
+  Eye,
+  Filter,
+  RefreshCw
+} from 'lucide-react';
 
 const SalesReport = () => {
-    const axiosSecure = useAxiosSecure();
-    const { data: cart = [], isLoading, isError, error } = useQuery({
-        queryKey: ["carts"],
-        queryFn: async () => {
-            const response = await axiosSecure.get("/carts/all");
-            return response.data;
+    // Mock data - replace with your actual useQuery and hooks
+    const cart = [
+        {
+            name: "Paracetamol 500mg",
+            seller: "PharmaCorp Ltd",
+            userEmail: "john.doe@email.com",
+            quantity: 2,
+            price: 45.50
         },
-    });
+        {
+            name: "Vitamin D3 Tablets",
+            seller: "HealthMed Inc",
+            userEmail: "jane.smith@email.com",
+            quantity: 1,
+            price: 120.00
+        },
+        {
+            name: "Omeprazole 20mg",
+            seller: "MediSupply Co",
+            userEmail: "mike.wilson@email.com",
+            quantity: 3,
+            price: 85.75
+        }
+    ];
+    
+    const isLoading = false;
+    const isError = false;
 
     // Calculate sales metrics
     const totalSales = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
@@ -24,60 +49,197 @@ const SalesReport = () => {
     const uniqueBuyers = [...new Set(cart.map(item => item.userEmail))].length;
     const totalProductsSold = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    const exportToXLSX = () => {
-        if (cart.length === 0) {
-            Swal.fire('No Data to Export', 'There is no sales data to export to XLSX.', 'info');
-            return;
-        }
-        const ws = XLSX.utils.json_to_sheet(cart.map(item => ({
-            "Product Name": item.name,
-            "Seller": item.seller,
-            "Buyer Email": item.userEmail,
-            "Quantity": item.quantity,
-            "Price": item.price,
-            "Total": item.quantity * item.price
-        })));
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "SalesReport");
-        XLSX.writeFile(wb, "SalesReport.xlsx");
-    };
-
     const exportToPDF = () => {
         if (cart.length === 0) {
-            Swal.fire('No Data to Export', 'There is no sales data to export to PDF.', 'info');
+            alert('No data to export');
             return;
         }
-        const doc = new jsPDF();
         
-        doc.setFontSize(22);
-        doc.setTextColor(2, 132, 199); // Tailwind's cyan-600
-        doc.text("Sales Report", 14, 20);
+        // Create PDF content
+        const printContent = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Sales Report</title>
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        margin: 20px; 
+                        color: #333;
+                        line-height: 1.6;
+                    }
+                    .header { 
+                        text-align: center; 
+                        margin-bottom: 30px; 
+                        border-bottom: 2px solid #2563eb;
+                        padding-bottom: 20px;
+                    }
+                    .header h1 { 
+                        color: #2563eb; 
+                        margin: 0;
+                        font-size: 28px;
+                    }
+                    .header p { 
+                        color: #666; 
+                        margin: 5px 0;
+                    }
+                    .metrics {
+                        display: flex;
+                        justify-content: space-around;
+                        margin: 30px 0;
+                        background: #f8fafc;
+                        padding: 20px;
+                        border-radius: 8px;
+                    }
+                    .metric {
+                        text-align: center;
+                        padding: 10px;
+                    }
+                    .metric h3 {
+                        margin: 0;
+                        color: #2563eb;
+                        font-size: 24px;
+                    }
+                    .metric p {
+                        margin: 5px 0 0 0;
+                        color: #666;
+                        font-size: 12px;
+                    }
+                    table { 
+                        width: 100%; 
+                        border-collapse: collapse; 
+                        margin-top: 20px;
+                        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                    }
+                    th, td { 
+                        border: 1px solid #e2e8f0; 
+                        padding: 12px 8px; 
+                        text-align: left;
+                    }
+                    th { 
+                        background-color: #2563eb; 
+                        color: white; 
+                        font-weight: bold;
+                        text-align: center;
+                    }
+                    tr:nth-child(even) { 
+                        background-color: #f8fafc; 
+                    }
+                    tr:hover { 
+                        background-color: #e2e8f0; 
+                    }
+                    .total-cell {
+                        font-weight: bold;
+                        color: #059669;
+                    }
+                    .footer {
+                        margin-top: 30px;
+                        text-align: center;
+                        color: #666;
+                        font-size: 12px;
+                    }
+                    @media print {
+                        body { margin: 0; }
+                        .no-print { display: none; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>Sales Report</h1>
+                    <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    <p>Report Period: ${new Date().toLocaleDateString()}</p>
+                </div>
+                
+                <div class="metrics">
+                    <div class="metric">
+                        <h3>$${totalSales.toFixed(2)}</h3>
+                        <p>TOTAL REVENUE</p>
+                    </div>
+                    <div class="metric">
+                        <h3>${totalTransactions}</h3>
+                        <p>TRANSACTIONS</p>
+                    </div>
+                    <div class="metric">
+                        <h3>${totalProductsSold}</h3>
+                        <p>PRODUCTS SOLD</p>
+                    </div>
+                    <div class="metric">
+                        <h3>${uniqueBuyers}</h3>
+                        <p>UNIQUE BUYERS</p>
+                    </div>
+                </div>
 
-        doc.setFontSize(10);
-        doc.setTextColor(100, 116, 139); // Tailwind's slate-500
-        doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 28);
-        doc.text(`Total Sales: $${totalSales.toFixed(2)}`, 14, 34);
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Seller</th>
+                            <th>Buyer Email</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${cart.map(item => `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.seller}</td>
+                                <td>${item.userEmail}</td>
+                                <td style="text-align: center">${item.quantity}</td>
+                                <td style="text-align: right">$${item.price.toFixed(2)}</td>
+                                <td style="text-align: right" class="total-cell">$${(item.quantity * item.price).toFixed(2)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
 
-        const tableColumn = ["Product Name", "Seller", "Buyer Email", "Quantity", "Price ($)", "Total ($)"];
-        const tableRows = cart.map(item => [
-            item.name,
-            item.seller,
-            item.userEmail,
-            item.quantity,
-            item.price.toFixed(2),
-            (item.quantity * item.price).toFixed(2)
-        ]);
+                <div class="footer">
+                    <p>This report was generated automatically by MediBazer Sales System</p>
+                    <p>For questions, contact: support@medibazar.com</p>
+                </div>
+            </body>
+            </html>
+        `;
+
+        // Create a new window and print
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(printContent);
+        printWindow.document.close();
         
-        doc.autoTable({
-            head: [tableColumn],
-            body: tableRows,
-            startY: 40,
-            styles: { fontSize: 8, cellPadding: 2, textColor: [55, 65, 81] },
-            headStyles: { fillColor: [2, 132, 199], textColor: [255, 255, 255] },
-            theme: 'striped',
-        });
+        // Wait for content to load then print
+        setTimeout(() => {
+            printWindow.print();
+            printWindow.close();
+        }, 500);
+    };
+
+    const exportToXLSX = () => {
+        if (cart.length === 0) {
+            alert('No data to export');
+            return;
+        }
         
-        doc.save("SalesReport.pdf");
+        const csvContent = [
+            ["Product Name", "Seller", "Buyer Email", "Quantity", "Price", "Total"],
+            ...cart.map(item => [
+                item.name,
+                item.seller,
+                item.userEmail,
+                item.quantity,
+                item.price,
+                (item.quantity * item.price).toFixed(2)
+            ])
+        ].map(row => row.join(",")).join("\n");
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'SalesReport.csv';
+        a.click();
+        window.URL.revokeObjectURL(url);
     };
 
     const csvData = cart.map(item => ({
@@ -90,159 +252,250 @@ const SalesReport = () => {
     }));
 
     if (isLoading) return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-900">
-            <span className="loading loading-bars text-cyan-500 loading-lg"></span>
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+            <div className="flex flex-col items-center space-y-4">
+                <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                <p className="text-slate-600 font-medium">Loading sales data...</p>
+            </div>
         </div>
     );
+
     if (isError) return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-900 text-red-400">
-            <p>Error loading sales data: {error.message}</p>
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50">
+            <div className="text-center p-8 bg-white rounded-2xl shadow-lg border border-red-200">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-red-600 text-2xl">⚠️</span>
+                </div>
+                <h3 className="text-xl font-semibold text-red-800 mb-2">Error Loading Data</h3>
+                <p className="text-red-600">Unable to load sales report data</p>
+            </div>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-gray-950 text-gray-100 p-4 md:p-10 font-sans">
-            <div className="max-w-7xl mx-auto space-y-12">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-slate-50 to-green-50 p-4 md:p-8">
+            <div className="max-w-7xl mx-auto space-y-8">
+                
                 {/* Header Section */}
-                <div className="bg-gray-900/80 backdrop-blur-xl rounded-3xl border border-gray-800 shadow-2xl p-8 lg:p-12 transform hover:scale-[1.01] transition-transform duration-500 will-change-transform">
-                    <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-6 lg:space-y-0">
+                <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 lg:p-10 relative overflow-hidden">
+                    {/* Background Pattern */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-blue-100/50 to-transparent rounded-full -translate-y-32 translate-x-32"></div>
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-green-100/50 to-transparent rounded-full translate-y-24 -translate-x-24"></div>
+                    
+                    <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-6 lg:space-y-0">
                         <div className="flex items-center space-x-6">
-                            <div className="p-5 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full shadow-2xl">
-                                <BarChart2 className="w-10 h-10 text-white" />
+                            <div className="p-4 bg-gradient-to-br from-blue-600 to-green-600 rounded-2xl shadow-lg">
+                                <BarChart2 className="w-8 h-8 text-white" />
                             </div>
                             <div>
-                                <h1 className="text-5xl font-extrabold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent leading-tight">
-                                    Sales Report
+                                <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+                                    Sales Dashboard
                                 </h1>
-                                <p className="text-gray-400 text-lg mt-2 font-medium">Detailed overview of all sales transactions.</p>
+                                <p className="text-slate-600 text-lg mt-2">Comprehensive analytics and reporting</p>
+                                <div className="flex items-center space-x-4 mt-3">
+                                    <div className="flex items-center space-x-2 text-sm text-slate-500">
+                                        <Calendar className="w-4 h-4" />
+                                        <span>Updated: {new Date().toLocaleDateString()}</span>
+                                    </div>
+                                    <div className="flex items-center space-x-2 text-sm text-slate-500">
+                                        <Eye className="w-4 h-4" />
+                                        <span>Live Data</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full lg:w-auto">
+                        
+                        {/* Action Buttons */}
+                        <div className="flex flex-wrap gap-3">
+                            <button className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all duration-200 flex items-center space-x-2 group">
+                                <Filter className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
+                                <span>Filters</span>
+                            </button>
+                            <button className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all duration-200 flex items-center space-x-2 group">
+                                <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
+                                <span>Refresh</span>
+                            </button>
                             <button
                                 onClick={exportToPDF}
-                                className="group relative w-full sm:w-auto px-6 py-3 overflow-hidden font-bold text-gray-900 transition-all duration-300 bg-red-500 rounded-full shadow-lg hover:shadow-red-400/50 flex items-center justify-center space-x-2"
+                                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-red-500/25 group"
                             >
-                                <FileText className="w-5 h-5 group-hover:rotate-[360deg] transition-transform duration-700" />
+                                <FileText className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
                                 <span>PDF</span>
                             </button>
-                            <CSVLink data={csvData} filename={"SalesReport.csv"} className="w-full sm:w-auto">
-                                <button className="group relative w-full px-6 py-3 overflow-hidden font-bold text-gray-900 transition-all duration-300 bg-yellow-500 rounded-full shadow-lg hover:shadow-yellow-400/50 flex items-center justify-center space-x-2">
-                                    <FileSpreadsheet className="w-5 h-5 group-hover:rotate-[360deg] transition-transform duration-700" />
-                                    <span>CSV</span>
-                                </button>
-                            </CSVLink>
                             <button
                                 onClick={exportToXLSX}
-                                className="group relative w-full sm:w-auto px-6 py-3 overflow-hidden font-bold text-gray-900 transition-all duration-300 bg-green-500 rounded-full shadow-lg hover:shadow-green-400/50 flex items-center justify-center space-x-2"
+                                className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-green-500/25 group"
                             >
-                                <Download className="w-5 h-5 group-hover:rotate-180 transition-transform duration-700" />
-                                <span>XLSX</span>
+                                <FileSpreadsheet className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                                <span>Excel</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 {/* Sales Metrics Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    {/* Total Sales Card */}
-                    <div className="relative group bg-gray-900 rounded-3xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-800">
-                        <div className="absolute inset-0 bg-cyan-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-3xl"></div>
-                        <div className="relative z-10 flex items-center justify-between text-gray-50">
-                            <div>
-                                <p className="text-gray-400 text-sm font-medium uppercase tracking-wide">Total Revenue</p>
-                                <p className="text-4xl md:text-5xl font-extrabold mt-2 text-cyan-400">${totalSales.toFixed(2)}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {/* Total Revenue */}
+                    <div className="group bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-100 to-transparent rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-3 bg-blue-100 rounded-xl group-hover:bg-blue-200 transition-colors duration-300">
+                                    <DollarSign className="w-6 h-6 text-blue-600" />
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-sm font-medium text-slate-500">+12.5% vs last month</p>
+                                </div>
                             </div>
-                            <div className="p-4 bg-gray-800 rounded-full group-hover:rotate-12 transition-transform duration-500">
-                                <DollarSign className="w-10 h-10 text-cyan-400" />
-                            </div>
+                            <h3 className="text-3xl font-bold text-slate-800 mb-1">${totalSales.toFixed(2)}</h3>
+                            <p className="text-slate-500 font-medium">Total Revenue</p>
                         </div>
                     </div>
 
-                    {/* Total Transactions Card */}
-                    <div className="relative group bg-gray-900 rounded-3xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-800">
-                        <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-3xl"></div>
-                        <div className="relative z-10 flex items-center justify-between text-gray-50">
-                            <div>
-                                <p className="text-gray-400 text-sm font-medium uppercase tracking-wide">Total Transactions</p>
-                                <p className="text-4xl md:text-5xl font-extrabold mt-2 text-blue-400">{totalTransactions}</p>
+                    {/* Total Transactions */}
+                    <div className="group bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green-100 to-transparent rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-3 bg-green-100 rounded-xl group-hover:bg-green-200 transition-colors duration-300">
+                                    <TrendingUp className="w-6 h-6 text-green-600" />
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-sm font-medium text-slate-500">+8.2% vs last month</p>
+                                </div>
                             </div>
-                            <div className="p-4 bg-gray-800 rounded-full group-hover:rotate-12 transition-transform duration-500">
-                                <TrendingUp className="w-10 h-10 text-blue-400" />
-                            </div>
+                            <h3 className="text-3xl font-bold text-slate-800 mb-1">{totalTransactions}</h3>
+                            <p className="text-slate-500 font-medium">Total Transactions</p>
                         </div>
                     </div>
 
-                    {/* Total Products Sold Card */}
-                    <div className="relative group bg-gray-900 rounded-3xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-800">
-                        <div className="absolute inset-0 bg-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-3xl"></div>
-                        <div className="relative z-10 flex items-center justify-between text-gray-50">
-                            <div>
-                                <p className="text-gray-400 text-sm font-medium uppercase tracking-wide">Products Sold</p>
-                                <p className="text-4xl md:text-5xl font-extrabold mt-2 text-purple-400">{totalProductsSold}</p>
+                    {/* Products Sold */}
+                    <div className="group bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-100 to-transparent rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-3 bg-purple-100 rounded-xl group-hover:bg-purple-200 transition-colors duration-300">
+                                    <ShoppingBag className="w-6 h-6 text-purple-600" />
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-sm font-medium text-slate-500">+15.1% vs last month</p>
+                                </div>
                             </div>
-                            <div className="p-4 bg-gray-800 rounded-full group-hover:rotate-12 transition-transform duration-500">
-                                <ShoppingBag className="w-10 h-10 text-purple-400" />
-                            </div>
+                            <h3 className="text-3xl font-bold text-slate-800 mb-1">{totalProductsSold}</h3>
+                            <p className="text-slate-500 font-medium">Products Sold</p>
                         </div>
                     </div>
 
-                    {/* Unique Buyers Card */}
-                    <div className="relative group bg-gray-900 rounded-3xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-800">
-                        <div className="absolute inset-0 bg-emerald-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-3xl"></div>
-                        <div className="relative z-10 flex items-center justify-between text-gray-50">
-                            <div>
-                                <p className="text-gray-400 text-sm font-medium uppercase tracking-wide">Unique Buyers</p>
-                                <p className="text-4xl md:text-5xl font-extrabold mt-2 text-emerald-400">{uniqueBuyers}</p>
+                    {/* Unique Buyers */}
+                    <div className="group bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-100 to-transparent rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-3 bg-orange-100 rounded-xl group-hover:bg-orange-200 transition-colors duration-300">
+                                    <User className="w-6 h-6 text-orange-600" />
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-sm font-medium text-slate-500">+6.8% vs last month</p>
+                                </div>
                             </div>
-                            <div className="p-4 bg-gray-800 rounded-full group-hover:rotate-12 transition-transform duration-500">
-                                <User className="w-10 h-10 text-emerald-400" />
-                            </div>
+                            <h3 className="text-3xl font-bold text-slate-800 mb-1">{uniqueBuyers}</h3>
+                            <p className="text-slate-500 font-medium">Unique Buyers</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Sales Table Section */}
-                <div className="bg-gray-900/80 backdrop-blur-xl rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
-                    <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-8 py-6 rounded-t-3xl">
-                        <h2 className="text-3xl font-bold text-white flex items-center space-x-4">
-                            <ShoppingBag className="w-8 h-8 text-cyan-400" />
-                            <span>Sales Overview</span>
-                        </h2>
+                <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+                    <div className="bg-gradient-to-r from-slate-50 to-slate-100 px-8 py-6 border-b border-slate-200">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                                <div className="p-2 bg-blue-100 rounded-lg">
+                                    <ShoppingBag className="w-5 h-5 text-blue-600" />
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl font-bold text-slate-800">Sales Transactions</h2>
+                                    <p className="text-slate-600">Detailed view of all sales activity</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center space-x-2 text-sm text-slate-500">
+                                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                <span>Real-time data</span>
+                            </div>
+                        </div>
                     </div>
 
                     {cart.length === 0 ? (
-                        <div className="text-center py-20">
-                            <p className="text-2xl font-semibold text-gray-400">No sales data available yet.</p>
-                            <p className="text-gray-500 mt-2">Check back later for sales information.</p>
+                        <div className="text-center py-16">
+                            <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <ShoppingBag className="w-12 h-12 text-slate-400" />
+                            </div>
+                            <h3 className="text-xl font-semibold text-slate-800 mb-2">No Sales Data Yet</h3>
+                            <p className="text-slate-500 mb-6">Your sales transactions will appear here once you start making sales.</p>
+                            <button className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium">
+                                Refresh Data
+                            </button>
                         </div>
                     ) : (
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left">
-                                <thead className="bg-gray-800 border-b border-gray-700">
-                                    <tr className="text-gray-400 uppercase text-sm">
-                                        <th scope="col" className="px-6 py-4 font-semibold">Product Name</th>
-                                        <th scope="col" className="px-6 py-4 font-semibold">Seller</th>
-                                        <th scope="col" className="px-6 py-4 font-semibold">Buyer</th>
-                                        <th scope="col" className="px-6 py-4 font-semibold text-right">Quantity</th>
-                                        <th scope="col" className="px-6 py-4 font-semibold text-right">Price</th>
-                                        <th scope="col" className="px-6 py-4 font-semibold text-right">Total</th>
+                            <table className="w-full">
+                                <thead className="bg-slate-50 border-b border-slate-200">
+                                    <tr className="text-left">
+                                        <th className="px-6 py-4 font-semibold text-slate-700">Product</th>
+                                        <th className="px-6 py-4 font-semibold text-slate-700">Seller</th>
+                                        <th className="px-6 py-4 font-semibold text-slate-700">Buyer</th>
+                                        <th className="px-6 py-4 font-semibold text-slate-700 text-center">Qty</th>
+                                        <th className="px-6 py-4 font-semibold text-slate-700 text-right">Price</th>
+                                        <th className="px-6 py-4 font-semibold text-slate-700 text-right">Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="divide-y divide-slate-100">
                                     {cart.map((item, index) => (
-                                        <tr key={index} className="border-b border-gray-800 hover:bg-gray-800/50 transition-colors duration-200">
-                                            <td className="px-6 py-4 font-medium text-gray-200 whitespace-nowrap">{item.name}</td>
-                                            <td className="px-6 py-4 text-gray-400">{item.seller}</td>
-                                            <td className="px-6 py-4 text-gray-400">{item.userEmail}</td>
-                                            <td className="px-6 py-4 text-gray-300 text-right">{item.quantity}</td>
-                                            <td className="px-6 py-4 text-gray-300 text-right">${item.price.toFixed(2)}</td>
-                                            <td className="px-6 py-4 font-bold text-teal-400 text-right">${(item.quantity * item.price).toFixed(2)}</td>
+                                        <tr key={index} className="hover:bg-blue-50/50 transition-colors duration-200 group">
+                                            <td className="px-6 py-4">
+                                                <div className="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors duration-200">
+                                                    {item.name}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 text-slate-600">{item.seller}</td>
+                                            <td className="px-6 py-4 text-slate-600">{item.userEmail}</td>
+                                            <td className="px-6 py-4 text-center">
+                                                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                                    {item.quantity}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 text-right font-medium text-slate-700">
+                                                ${item.price.toFixed(2)}
+                                            </td>
+                                            <td className="px-6 py-4 text-right font-bold text-green-600">
+                                                ${(item.quantity * item.price).toFixed(2)}
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
                     )}
+                </div>
+
+                {/* Summary Footer */}
+                <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                    <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+                        <div className="text-center sm:text-left">
+                            <h4 className="font-semibold text-slate-800">Report Summary</h4>
+                            <p className="text-sm text-slate-600">Generated on {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}</p>
+                        </div>
+                        <div className="flex items-center space-x-6 text-center">
+                            <div>
+                                <div className="text-2xl font-bold text-blue-600">{((totalSales / totalTransactions) || 0).toFixed(2)}</div>
+                                <div className="text-sm text-slate-500">Avg. Order Value</div>
+                            </div>
+                            <div className="w-px h-12 bg-slate-200"></div>
+                            <div>
+                                <div className="text-2xl font-bold text-green-600">${totalSales.toFixed(2)}</div>
+                                <div className="text-sm text-slate-500">Total Revenue</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

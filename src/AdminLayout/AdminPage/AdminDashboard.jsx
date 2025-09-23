@@ -36,12 +36,12 @@ const AdminDashboard = () => {
       icon: FolderOpen,
       description: "Product categories & organization"
     },
-    {
-      path: "/admin/payments",
-      label: "Payment Management",
-      icon: CreditCard,
-      description: "Payment processing & history"
-    },
+    // {
+    //   path: "/admin/payments",
+    //   label: "Payment Management",
+    //   icon: CreditCard,
+    //   description: "Payment processing & history"
+    // },
     {
       path: "/admin/salesReport",
       label: "Sales Report",
@@ -205,7 +205,7 @@ const AdminDashboard = () => {
 
         {/* Main Content */}
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
-          <div className="container mx-auto px-4 py-6 lg:px-6">
+          <div className=" mx-auto px-4 py-6 lg:px-6">
             {isAdmin ? (
               <div className="min-h-full">
                 <Outlet />

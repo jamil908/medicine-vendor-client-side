@@ -18,6 +18,7 @@ import ManageCategory from "../AdminLayout/AdminPage/manageCategory/ManageCatego
 import AdminRoute from "../AdminLayout/adminRoute/AdminRoute";
 import SalesReport from "../AdminLayout/AdminPage/salesReport/SalesReport";
 import AdminChart from "../AdminLayout/AdminPage/AdminChart/AdminChart";
+import SellerRoute from "../SellerLayout/SellerRoute";
   
   export const router = createBrowserRouter([
     {
@@ -82,7 +83,18 @@ import AdminChart from "../AdminLayout/AdminPage/AdminChart/AdminChart";
     },
     {
       path:'/seller',
-      element:<SellerDashboard></SellerDashboard>
-
+      element:<SellerDashboard></SellerDashboard>,
+        children: [
+       
+      
+        {
+          path: 'categories',
+          element: <SellerRoute><ManageCategory></ManageCategory></SellerRoute>
+        },
+        {
+          path: 'salesReport',
+          element: <SellerRoute><SalesReport></SalesReport></SellerRoute>
+        },
+      ]
     }
   ]);

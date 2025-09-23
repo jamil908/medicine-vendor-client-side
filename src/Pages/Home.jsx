@@ -1,27 +1,29 @@
-import React from 'react';
-import Slider from './Banner/Slider';
-import Category from './category/Category';
-import HealthTips from './healthTips/HealthTips';
-import LiveChatSupport from './liveChatSupport/LiveChatSupport';
-import Faq from './faq/Faq';
-import DiscountSlider from './discountSlider/DiscountSlider';
-import ServiceHighlights from './Service/ServiceHilaghts';
-import HomepageSearchSection from './HomePageSearch/HomePageSearch';
+import React, { Suspense, lazy } from "react";
+import Slider from "./Banner/Slider";
+
+const Category = lazy(() => import("./category/Category"));
+const ServiceHighlights = lazy(() => import("./Service/ServiceHilaghts"));
+const HomepageSearchSection = lazy(() => import("./HomePageSearch/HomePageSearch"));
+const HealthTips = lazy(() => import("./healthTips/HealthTips"));
+const Faq = lazy(() => import("./faq/Faq"));
+const DiscountSlider = lazy(() => import("./discountSlider/DiscountSlider"));
+const LiveChatSupport = lazy(() => import("./liveChatSupport/LiveChatSupport"));
 
 const Home = () => {
-    return (
-        <div>
-              <Slider></Slider>
-              <Category></Category>
-              <ServiceHighlights></ServiceHighlights>
-              <HomepageSearchSection></HomepageSearchSection>
-              <HealthTips></HealthTips>
-
-              <Faq></Faq>
-              <DiscountSlider></DiscountSlider>
-              <LiveChatSupport></LiveChatSupport>
-        </div>
-    );
+  return (
+    <div>
+      <Slider />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Category />
+        <ServiceHighlights />
+        <HomepageSearchSection />
+        <HealthTips />
+        <Faq />
+        <DiscountSlider />
+        <LiveChatSupport />
+      </Suspense>
+    </div>
+  );
 };
 
 export default Home;
