@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAxiosPublic from "../../Hooks/axiosPublic/useAxiosPublic";
 
 const SellerRevenueChart = () => {
   const [data, setData] = useState([]);
+ const axiosPublic = useAxiosPublic()
  const { user } = useContext(AuthContext);
     const email = user?.email
   useEffect(() => {
     if (email) {
-      useAxiosSecure.get(`/seller-monthly-revenue/${email}`).then((res) => setData(res.data.monthlyRevenue));
+      axiosPublic.get(`/seller-monthly-revenue/${email}`).then((res) => setData(res.data.monthlyRevenue));
     }
   }, [email]);
 

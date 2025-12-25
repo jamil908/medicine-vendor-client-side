@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import React, { useContext, useEffect, useState } from "react";
+import useAxiosPublic from "../../Hooks/axiosPublic/useAxiosPublic";
+import { AuthContext } from "../../Providers/AuthProvider";
 
-const SellerProductStats = ({ email }) => {
+const SellerProductStats = () => {
   const [products, setProducts] = useState([]);
-
-  useEffect(() => {
+  const axiosPublic = useAxiosPublic()
+ const { user } = useContext(AuthContext);
+    const email = user?.email
+      useEffect(() => {
     if (email) {
-      useAxiosSecure.get(`/seller-product-stats/${email}`).then((res) => setProducts(res.data.productStats));
+      axiosPublic.get(`/seller-product-stats/${email}`).then((res) => setProducts(res.data.productStats));
     }
   }, [email]);
 

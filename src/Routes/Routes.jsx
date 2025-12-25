@@ -21,6 +21,8 @@ import AdminChart from "../AdminLayout/AdminPage/AdminChart/AdminChart";
 import SellerRoute from "../SellerLayout/SellerRoute";
 import AboutUs from "../Shared/About";
 import ContactUs from "../Shared/Contact";
+import SellerProductStats from "../SellerLayout/seller/ProductStats";
+import SellerRevenueChart from "../SellerLayout/seller/ReveneueChart";
   
   export const router = createBrowserRouter([
     {
@@ -104,6 +106,14 @@ import ContactUs from "../Shared/Contact";
         {
           path: 'salesReport',
           element: <SellerRoute><SalesReport></SalesReport></SellerRoute>
+        },
+        {
+          path: 'product',
+          element: <SellerRoute><SellerProductStats></SellerProductStats></SellerRoute>
+        },
+        {
+          path: 'revenewe',
+          element: <SellerRoute><SellerRevenueChart></SellerRevenueChart></SellerRoute>
         },
       ]
     }

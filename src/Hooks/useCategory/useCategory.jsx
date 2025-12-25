@@ -11,7 +11,7 @@ const useCategory = () => {
     const res = await axiosSecure.get("/category");
     return res.data;
   },
-  staleTime: 1000 * 60 * 5, // 5 মিনিট cache থাকবে
+  staleTime: 1000 * 60 * 5, 
   cacheTime: 1000 * 60 * 10, // 10 মিনিট পরে garbage collect হবে
 });
 

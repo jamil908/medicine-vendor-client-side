@@ -37,7 +37,13 @@ const sellerDashboard = () => {
         label: "Sales Report",
         icon: BarChart3,
         description: "Analytics & reporting"
-      }
+      },
+      {
+        path: "/seller/product",
+        label: "Product",
+        icon: BarChart3,
+        description: "Analytics & reporting"
+      },
     ];
   
     const AdminNavLink = ({ to, icon: Icon, children, description, onClick }) => (

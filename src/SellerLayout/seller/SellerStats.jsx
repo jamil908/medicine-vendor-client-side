@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAxiosPublic from "../../Hooks/axiosPublic/useAxiosPublic";
 
 const SellerStats = () => {
-    const { user } = useContext(AuthContext);
+ const axiosPublic = useAxiosPublic()
+ const { user } = useContext(AuthContext);
     const email = user?.email
   const [stats, setStats] = useState({});
 
