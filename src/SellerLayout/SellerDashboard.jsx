@@ -19,18 +19,7 @@ const sellerDashboard = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
   
     const menuItems = [
-      {
-        path: "/seller",
-        label: "seller Chart",
-        icon: Users,
-        description: "seller accounts & permissions"
-      },
-      {
-        path: "/seller/users",
-        label: "Manage Users",
-        icon: Users,
-        description: "User accounts & permissions"
-      },
+    
       {
         path: "/seller/categories",
         label: "Manage Categories",
@@ -239,3 +228,31 @@ const sellerDashboard = () => {
   };
   
 export default sellerDashboard;
+
+
+
+
+// import React, { useContext } from "react";
+// import { AuthContext } from "../Providers/AuthProvider";
+// import SellerStats from "./seller/SellerStats";
+// import SellerRevenueChart from "./seller/ReveneueChart";
+// import SellerProductStats from "./seller/ProductStats";
+// import SellerSalesTable from "./seller/SellerTable";
+
+// const SellerDashboard = () => {
+//     const { user } = useContext(AuthContext);
+
+//   return (
+//     <div style={{ padding: "20px" }}>
+//       <h1>Seller Dashboard</h1>
+//       <SellerStats email={user?.email} />
+//       <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
+//         <SellerRevenueChart email={user?.email} />
+//         <SellerProductStats email={user?.email} />
+//       </div>
+//       <SellerSalesTable email={user?.email} />
+//     </div>
+//   );
+// };
+
+// export default SellerDashboard;

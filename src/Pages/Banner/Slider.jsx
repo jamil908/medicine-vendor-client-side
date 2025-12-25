@@ -31,7 +31,7 @@ const Slider = () => {
     ];
 
     return (
-        <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-slate-50 to-green-50">
+        <div className="relative max-w-7xl mx-auto overflow-hidden bg-gradient-to-br from-blue-50 via-slate-50 to-green-50">
             {/* Clean Medical Background Overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-green-600/10 z-10"></div>
             

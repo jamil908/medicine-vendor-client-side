@@ -19,6 +19,8 @@ import AdminRoute from "../AdminLayout/adminRoute/AdminRoute";
 import SalesReport from "../AdminLayout/AdminPage/salesReport/SalesReport";
 import AdminChart from "../AdminLayout/AdminPage/AdminChart/AdminChart";
 import SellerRoute from "../SellerLayout/SellerRoute";
+import AboutUs from "../Shared/About";
+import ContactUs from "../Shared/Contact";
   
   export const router = createBrowserRouter([
     {
@@ -48,6 +50,14 @@ import SellerRoute from "../SellerLayout/SellerRoute";
         {
             path:'/cart',
             element:<Cart></Cart>
+        },
+        {
+            path:'/about',
+            element:<AboutUs></AboutUs>
+        },
+        {
+            path:'/contact',
+            element:<ContactUs></ContactUs>
         },
         {
             path:'/checkout',

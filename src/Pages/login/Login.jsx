@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -11,6 +11,8 @@ const Login = () => {
     const from = location.state?.from?.pathname || '/';
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
 
     const handleGoogleLogin = () => {
         setIsLoading(true);
@@ -34,6 +36,13 @@ const Login = () => {
             .finally(() => {
                 setIsLoading(false);
             });
+    };
+
+    const handleQuickLogin = (email, password) => {
+        if (emailRef.current && passwordRef.current) {
+            emailRef.current.value = email;
+            passwordRef.current.value = password;
+        }
     };
 
     const handleLogin = e => {
@@ -65,6 +74,13 @@ const Login = () => {
                     }
                 });
                 navigate(from, { replace: true });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                });
             })
             .finally(() => {
                 setIsLoading(false);
@@ -144,6 +160,41 @@ const Login = () => {
                             <p className="text-gray-600">Enter your credentials to access your account</p>
                         </div>
 
+                        {/* Quick Login Buttons */}
+                        <div className="mb-6 space-y-3">
+                            <div className="grid grid-cols-2 gap-3">
+                                {/* Admin Login Button */}
+                                <button
+                                    type="button"
+                                    onClick={() => handleQuickLogin('med@for28.com', 'asdfR1@')}
+                                    className="py-2 px-3 rounded-lg border-2 border-blue-600 text-blue-600 font-semibold hover:bg-blue-50 transition-all duration-200 flex items-center justify-center gap-2 text-sm"
+                                >
+                                    <FaShieldAlt className="w-4 h-4" />
+                                    Admin
+                                </button>
+
+                                {/* Seller Login Button */}
+                                <button
+                                    type="button"
+                                    onClick={() => handleQuickLogin('seller@example.gmail.com', 'asdfR12@')}
+                                    className="py-2 px-3 rounded-lg border-2 border-green-600 text-green-600 font-semibold hover:bg-green-50 transition-all duration-200 flex items-center justify-center gap-2 text-sm"
+                                >
+                                    <FaUser className="w-4 h-4" />
+                                    Seller
+                                </button>
+                            </div>
+                            <p className="text-xs text-gray-500 text-center">Click to auto-fill credentials</p>
+                        </div>
+
+                        <div className="relative mb-6">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-gray-300" />
+                            </div>
+                            <div className="relative flex justify-center text-sm">
+                                <span className="px-2 bg-white text-gray-500">Or login manually</span>
+                            </div>
+                        </div>
+
                         <form onSubmit={handleLogin} className="space-y-6">
                             {/* Email Field */}
                             <div>
@@ -155,6 +206,7 @@ const Login = () => {
                                         <FaEnvelope className="h-5 w-5 text-gray-400" />
                                     </div>
                                     <input
+                                        ref={emailRef}
                                         type="email"
                                         name="email"
                                         placeholder="Enter your email"
@@ -174,6 +226,7 @@ const Login = () => {
                                         <FaLock className="h-5 w-5 text-gray-400" />
                                     </div>
                                     <input
+                                        ref={passwordRef}
                                         type={showPassword ? "text" : "password"}
                                         name="password"
                                         placeholder="Enter your password"

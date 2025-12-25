@@ -11,13 +11,13 @@ const LiveChatSupport = lazy(() => import("./liveChatSupport/LiveChatSupport"));
 
 const Home = () => {
   return (
-    <div>
+    <div class="pb-5 bg-gradient-to-br from-slate-50 via-blue-50 to-green-50">
       <Slider />
       <Suspense fallback={<div>Loading...</div>}>
         <Category />
         <ServiceHighlights />
         <HomepageSearchSection />
-        <HealthTips />
+        <HealthTips  />
         <Faq />
         <DiscountSlider />
         <LiveChatSupport />

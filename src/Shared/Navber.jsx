@@ -120,18 +120,30 @@ const Navber = () => {
               >
                 Shop
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 to="/prescriptions"
                 className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200"
               >
                 Prescriptions
+              </NavLink> */}
+              <NavLink
+                to="/about"
+                className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200"
+              >
+                About
               </NavLink>
               <NavLink
+                to="/contact"
+                className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200"
+              >
+                Contact
+              </NavLink>
+              {/* <NavLink
                 to="/health-info"
                 className="font-medium text-slate-700 hover:text-blue-600 transition-colors duration-200"
               >
                 Health Info
-              </NavLink>
+              </NavLink> */}
             </div>
 
             {/* Cart & User Section */}
@@ -180,7 +192,7 @@ const Navber = () => {
                     </div>
 
                     <div className="py-2">
-                      <Link
+                      {/* <Link
                         to="/profile"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
                       >
@@ -191,13 +203,13 @@ const Navber = () => {
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
                       >
                         Order History
-                      </Link>
-                      <Link
+                      </Link> */}
+                      {/* <Link
                         to="/prescriptions"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
                       >
                         My Prescriptions
-                      </Link>
+                      </Link> */}
 
                       {isAdmin && (
                         <Link
@@ -290,19 +302,33 @@ const Navber = () => {
                   Shop
                 </NavLink>
                 <NavLink
+                  to="/about"
+                  className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  About
+                </NavLink>
+                <NavLink
+                  to="/contact"
+                  className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Contact
+                </NavLink>
+                {/* <NavLink
                   to="/prescriptions"
                   className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
                   onClick={() => setMenuOpen(false)}
                 >
                   Prescriptions
-                </NavLink>
-                <NavLink
+                </NavLink> */}
+                {/* <NavLink
                   to="/health-info"
                   className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
                   onClick={() => setMenuOpen(false)}
                 >
                   Health Info
-                </NavLink>
+                </NavLink> */}
                 <NavLink
                   to="/cart"
                   className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors duration-200"
@@ -344,7 +370,7 @@ const Navber = () => {
                     </div>
 
                     <div className="space-y-1 mt-2">
-                      <Link
+                      {/* <Link
                         to="/profile"
                         className="block px-3 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 rounded-md transition-colors duration-200"
                       >
@@ -355,7 +381,7 @@ const Navber = () => {
                         className="block px-3 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 rounded-md transition-colors duration-200"
                       >
                         Order History
-                      </Link>
+                      </Link> */}
 
                       {isAdmin && (
                         <Link
